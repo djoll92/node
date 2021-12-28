@@ -2,6 +2,15 @@ import BasiqApi from './BasiqApi.js';
 import { isDataPaginated, getDataArray } from '../helper/helper.js';
 
 class Transactions {
+	/**
+	* Instancing Transactions object
+	*
+	* @constructor
+	* @param  {String} jobID job ID string
+	* @param  {String} userID user ID string
+	* @param  {Object} token Token instance
+	* @return {Object} Transaction instance
+ 	*/
 	constructor( jobID, userID, token ) {
 		this.jobID = jobID;
 		this.userID = userID;

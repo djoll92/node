@@ -24,7 +24,7 @@ class BasiqApi {
 	* Exchanging the api key for an access token
 	*
 	* @async
-	* @param  {String} apiKey
+	* @param  {String} apiKey API key string
 	* @return {Promise<object>} promise of token data object
  	*/
 	static postToken = async apiKey  => {
@@ -52,7 +52,8 @@ class BasiqApi {
 	* Creating the user
 	*
 	* @async
-	* @param  {Object} token token object
+	* @param  {String} data stringified object with email and mobile attributes
+	* @param  {Object} token Token instance
 	* @return {Promise<string>} promise of userID string
  	*/
 	static postUser = async ( data, token ) => {
@@ -77,9 +78,9 @@ class BasiqApi {
 	* Creating a connection to an institution
 	*
 	* @async
-	* @param  {String} userID
-	* @param  {String} data stringified object with username and password
-	* @param  {Object} token token object
+	* @param  {String} userID user ID string
+	* @param  {String} data stringified object with loginId, password and institution attributes
+	* @param  {Object} token Token instance
 	* @return {Promise<string>} promise of jobID string
  	*/
 	static postConnection = async ( userID, data, token ) => {
@@ -105,8 +106,8 @@ class BasiqApi {
 	* Retrieves the details of an existing job
 	*
 	* @async
-	* @param  {String} jobID
-	* @param  {Object} token token object
+	* @param  {String} jobID job ID string
+	* @param  {Object} token Token instance
 	* @return {Promise<object>} promise of job object
  	*/
 	static getJob = async (jobID, token) => {
@@ -131,8 +132,8 @@ class BasiqApi {
 	* Retrieves transactions
 	*
 	* @async
-	* @param  {String} userID
-	* @param  {Object} token token object
+	* @param  {String} userID user ID string
+	* @param  {Object} token Token instance
 	* @param  {String} next url for the next transactions chunk
 	* @return {Promise<object>} promise of transactions object
  	*/
