@@ -3,6 +3,9 @@ class Error {
 		this.error = error;
 	}
 
+	/**
+	* Logs the details of an error when it occurs and overrides default unhandeld rejection event.
+ 	*/
 	handleError = () => {
 		const error = this.error;
 		if (error.response) {

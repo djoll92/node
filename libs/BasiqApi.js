@@ -19,8 +19,15 @@ const defaultGetHeaders = accessToken => {
 }
 
 class BasiqApi {
-	
-	static postToken = async apiKey => {
+
+	/**
+	* Exchanging the api key for an access token
+	*
+	* @async
+	* @param  {String} apiKey
+	* @return {Promise<object>} promise of token data object
+ 	*/
+	static postToken = async apiKey  => {
 
 		const config = {
 			method: 'post',
@@ -41,7 +48,14 @@ class BasiqApi {
 		).catch(error => { new Error(error).handleError() });
 	};
 
-	static postUser = async token => {
+	/**
+	* Creating the user
+	*
+	* @async
+	* @param  {Object} token token object
+	* @return {Promise<string>} promise of userID string
+ 	*/
+	static postUser = async ( data, token ) => {
 		const accessToken = await token.getToken();
 		  
 		const config = {
@@ -49,7 +63,7 @@ class BasiqApi {
 			url: '/users',
 			baseURL,
 			headers: defaultPostHeaders(accessToken),
-			data: process.env.USER_DATA
+			data
 		};
 		  
 		return await axios(config).then(
@@ -59,7 +73,16 @@ class BasiqApi {
 		}).catch( error => { new Error(error).handleError() } )
 	}
 
-	static postConnection = async ( userID, token ) => {
+	/**
+	* Creating a connection to an institution
+	*
+	* @async
+	* @param  {String} userID
+	* @param  {String} data stringified object with username and password
+	* @param  {Object} token token object
+	* @return {Promise<string>} promise of jobID string
+ 	*/
+	static postConnection = async ( userID, data, token ) => {
 		const accessToken = await token.getToken();
 	
 		const config = {
@@ -67,7 +90,7 @@ class BasiqApi {
 			baseURL,
 			url: `/users/${userID}/connections`,
 			headers: defaultPostHeaders(accessToken),
-			data: process.env.CONNECTION_DATA
+			data
 		}
 	
 		return await axios(config).then(
@@ -78,6 +101,14 @@ class BasiqApi {
 		).catch( error => { new Error(error).handleError() } )
 	}
 
+	/**
+	* Retrieves the details of an existing job
+	*
+	* @async
+	* @param  {String} jobID
+	* @param  {Object} token token object
+	* @return {Promise<object>} promise of job object
+ 	*/
 	static getJob = async (jobID, token) => {
 		const accessToken = await token.getToken();
 	
@@ -96,6 +127,15 @@ class BasiqApi {
 	
 	}
 
+	/**
+	* Retrieves transactions
+	*
+	* @async
+	* @param  {String} userID
+	* @param  {Object} token token object
+	* @param  {String} next url for the next transactions chunk
+	* @return {Promise<object>} promise of transactions object
+ 	*/
 	static getTransactions = async ( userID, token, next ) => {
 		const accessToken = await token.getToken();
 		next = typeof next !== 'undefined' ? next : '';
